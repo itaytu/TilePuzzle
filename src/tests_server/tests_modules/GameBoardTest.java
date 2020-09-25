@@ -28,4 +28,34 @@ class GameBoardTest {
 
     }
 
+    @Test
+    void fractionArgumentBoardInitialization() {
+
+    }
+
+    @Test
+    void equalityOfTwoBoardsSameSizeAndValues() {
+        GameBoard gameBoardOne = new GameBoard(4);
+        GameBoard gameBoardTwo = new GameBoard(4);
+
+        assertEquals(gameBoardOne, gameBoardTwo);
+    }
+
+    @Test
+    void equalityOfTwoBoardsSameSizeDifferentValues(){
+        GameBoard gameBoardOne = new GameBoard(3);
+        GameBoard gameBoardTwo = new GameBoard(3);
+        int[][] board = {{1, 2, 3}, {4, 5, 6}, {7, 9, 8}};
+        gameBoardTwo.setBoard(board);
+
+        assertEquals(gameBoardOne, gameBoardTwo);
+    }
+
+    @Test
+    void equalityOfTwoBoardsDifferentSize(){
+        GameBoard gameBoardOne = new GameBoard(3);
+        GameBoard gameBoardTwo = new GameBoard(4);
+
+        assertEquals(gameBoardOne, gameBoardTwo);
+    }
 }
