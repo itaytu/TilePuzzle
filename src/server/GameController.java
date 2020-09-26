@@ -1,16 +1,21 @@
 package server;
 
-import javax.imageio.IIOException;
-import java.io.BufferedReader;
+import server.modules.GameBoard;
 import java.io.IOException;
-import java.util.Scanner;
 
 public final class GameController {
 
+    private GameBoard gameBoardSolution;
 
-    public void initGame(int boardSize) throws IOException {
+    public boolean initGame(double boardSize) throws IOException {
+
         if (!isSizeInputValid(boardSize))
-            line = br.readLine();
+            return false;
+
+        gameBoardSolution = new GameBoard((int) boardSize);
+        return true;
+        /*if (!isSizeInputValid(boardSize))
+            line = br.readLine();*/
 
 
         /*for (int i = 0; i < strs.length; i++) {
@@ -25,7 +30,7 @@ public final class GameController {
 
 
 
-    private boolean isSizeInputValid(int boardSize){
-        return boardSize > 0;
+    private boolean isSizeInputValid(double boardSize){
+        return boardSize > 0 && boardSize == Math.floor(boardSize);
     }
 }

@@ -6,6 +6,8 @@ public class GameBoard {
     private int[][] board;
     private int[] blankPosition = new int[2];
 
+    public GameBoard(){}
+
     public GameBoard(int size) {
         this(size, size);
     }
@@ -15,9 +17,18 @@ public class GameBoard {
         initBoard();
     }
 
-/*    public GameBoard(int[][] board){
-        this.board = board;
-    }*/
+   public GameBoard(GameBoard gameBoard){
+        this.board = new int[gameBoard.board.length][gameBoard.board.length];
+        for(int i = 0; i < gameBoard.board.length; i++)
+        {
+            int[] aMatrix = gameBoard.board[i];
+            int   aLength = aMatrix.length;
+            this.board[i] = new int[aLength];
+            System.arraycopy(aMatrix, 0, this.board[i], 0, aLength);
+        }
+        this.blankPosition = new int[gameBoard.blankPosition.length];
+        System.arraycopy(gameBoard.blankPosition, 0, this.blankPosition, 0, gameBoard.blankPosition.length);
+    }
 
 
     public int[][] getBoard() {
@@ -37,7 +48,7 @@ public class GameBoard {
     }
 
 
-    private void initBoard(){
+    private void initBoard() {
         int length = this.board.length;
         for (int i = 0; i < length; i++) {
             for (int j = 0; j < this.board[0].length; j++) {
@@ -58,6 +69,17 @@ public class GameBoard {
 
     @Override
     public int hashCode() {
+        //TODO: Check hashcoding for 2d array
         return Arrays.hashCode(board);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder result= new StringBuilder();
+        if (this.board == null || this.board.length == 0)
+            return "Empty GameBoard";
+        for (int[] row: this.board)
+            result.append(Arrays.toString(row)).append("\n");
+        return result.toString();
     }
 }
