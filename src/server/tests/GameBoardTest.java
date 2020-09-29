@@ -1,4 +1,4 @@
-package tests_server.tests_modules;
+package server.tests;
 
 import org.junit.jupiter.api.Test;
 import server.modules.GameBoard;

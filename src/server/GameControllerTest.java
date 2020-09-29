@@ -3,6 +3,7 @@ package server;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import server.game_logic.GameBoardActions;
 import server.modules.GameBoard;
 import server.modules.Movement;

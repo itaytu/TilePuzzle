@@ -13,22 +13,22 @@ public class Main {
     public static void main(String[] args) throws IOException {
         final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         GameController gameController = new GameController();
+        boolean isPlaying = true;
+        String input;
         String pattern = "^([1-9][\\d]*)$";
         Pattern r = Pattern.compile(pattern);
         // Client side verification
-        String input;
         do {
             input = reader.readLine();
         } while (!r.matcher(input).find());
         // Server side verification
-        Response response = gameController.initGame(input);
+        Response response = gameController.initGame(input);     // Game initiated
         while (response.getStatus().equals("Failed")) {
             System.out.println(response.getResponseMessage());
             input = reader.readLine();
             response = gameController.initGame(input);
         }
         System.out.println(response.getResponseMessage() + '\n' + response.getGameBoard());
-        boolean isPlaying = true;
         while (isPlaying) {
             input = reader.readLine();
             response = gameController.playerMove(input);

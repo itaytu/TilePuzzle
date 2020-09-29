@@ -5,7 +5,7 @@ import server.modules.Movement;
 
 import java.util.ArrayList;
 
-public final class InGameAlgorithms {
+public class InGameAlgorithms {
 
     protected static ArrayList<Movement> checkPossibleMoves(GameBoard gameBoard){
         ArrayList<Movement> possibleMoves = new ArrayList<>();

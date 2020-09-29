@@ -5,7 +5,7 @@ import server.modules.GameBoard;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-public final class PreGameAlgorithms {
+public class PreGameAlgorithms {
 
     //Random initialization using Fisher–Yates algorithm modified for a 2d array
     protected static GameBoard fisherYatesShuffle(GameBoard gameBoard){
