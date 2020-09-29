@@ -1,29 +1,51 @@
 package client;
 
 import server.GameController;
+import server.modules.Response;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Scanner;
+import java.util.regex.Pattern;
 
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        Scanner sc = new Scanner(System.in);
+        final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         GameController gameController = new GameController();
-        double boardSize;
-        System.out.println("Hi, Welcome to the tile puzzle game:\n" +
-                "The game is simple: Enter a positive size for the tile board.\n" +
-                "every turn choose a move you would like to do from the available moves: U - up, D - down, L - left, R - right.\n" +
-                "The game will end either when the tile puzzle is solved or by pressing Q to quit the game.");
-        while (true){
-            do {
-                boardSize = sc.nextDouble();
-            }while (!gameController.initGame(boardSize));
-
-            break;
+        String pattern = "^([1-9][\\d]*)$";
+        Pattern r = Pattern.compile(pattern);
+        // Client side verification
+        String input;
+        do {
+            input = reader.readLine();
+        } while (!r.matcher(input).find());
+        // Server side verification
+        Response response = gameController.initGame(input);
+        while (response.getStatus().equals("Failed")) {
+            System.out.println(response.getResponseMessage());
+            input = reader.readLine();
+            response = gameController.initGame(input);
         }
-        sc.close();
+        System.out.println(response.getResponseMessage() + '\n' + response.getGameBoard());
+        boolean isPlaying = true;
+        while (isPlaying) {
+            input = reader.readLine();
+            response = gameController.playerMove(input);
+            // Player ended game
+            if (response.isGameOver()){
+                isPlaying = false;
+                System.out.println(response.getResponseMessage());
+            }
+            else {
+                // Invalid movement
+                if (response.getStatus().equals("Failed"))
+                    System.out.println(response.getResponseMessage());
+                // Valid movement
+                else
+                    System.out.println(response.getResponseMessage() + '\n' + response.getGameBoard());
+            }
+        }
+        reader.close();
     }
 }

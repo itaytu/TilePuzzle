@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class GameBoardActions {
 
-    public GameBoard generateGameBoard(int gameBoardSize){
+    public static GameBoard generateGameBoard(int gameBoardSize){
         GameBoard gameBoard = new GameBoard(gameBoardSize);
         do {
             gameBoard = randomGameBoardInitialization(gameBoard);
@@ -16,24 +16,20 @@ public class GameBoardActions {
         return gameBoard;
     }
 
-    public GameBoard randomGameBoardInitialization(GameBoard gameBoard) {
+    public static GameBoard randomGameBoardInitialization(GameBoard gameBoard) {
        return PreGameAlgorithms.fisherYatesShuffle(gameBoard);
     }
 
-    public boolean isGameBoardSolvable(GameBoard gameBoard) {
+    public static boolean isGameBoardSolvable(GameBoard gameBoard) {
         return PreGameAlgorithms.checkIfSolvable(gameBoard);
     }
 
-    public ArrayList<Movement> possibleMoves(GameBoard gameBoard) {
+    public static ArrayList<Movement> possibleMoves(GameBoard gameBoard) {
         return InGameAlgorithms.checkPossibleMoves(gameBoard);
     }
 
-    public GameBoard move(GameBoard gameBoard, Movement movement) {
-        return InGameAlgorithms.makeMovement(gameBoard, movement);
-    }
-
-    public boolean isGameOver(GameBoard currentGameBoard, GameBoard solutionGameBoard) {
-        return currentGameBoard.equals(solutionGameBoard);
+    public static void move(GameBoard gameBoard, Movement movement) {
+        InGameAlgorithms.makeMovement(gameBoard, movement);
     }
 
 }

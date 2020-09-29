@@ -18,8 +18,15 @@ public enum Movement {
         return movement;
     }
 
-    public String getTypeOfMove() {
-        return typeOfMove;
+    public String getTypeOfMove() { return  typeOfMove; }
+
+    public static Movement fromString(String text) {
+        for (Movement movement : Movement.values()) {
+            if (movement.typeOfMove.equalsIgnoreCase(text)) {
+                return movement;
+            }
+        }
+        return null;
     }
 
 }

@@ -34,18 +34,46 @@ class GameBoardActionsTest {
 
 
     @Test
-    void randomBoardsInitialization(){
-        int numOfRounds = 10;
+    void randomBoardsInitializationFromSameBoard() {
+        int iterations = 10;
         HashSet<GameBoard> gameBoards = new HashSet<>();
         gameBoards.add(gameBoard);
-        for (int i = 0; i < numOfRounds; i++) {
+        for (int i = 0; i < iterations; i++) {
             gameBoards.add(gameBoardActions.randomGameBoardInitialization(gameBoard));
         }
-        assertEquals(numOfRounds + 1, gameBoards.size(), 1);
+        assertEquals(iterations + 1, gameBoards.size(), 1);
     }
 
     @Test
-    void unsolvableBoardEvenSizeOddBlankOddInv() {
+    void randomBoardsInitializationFromLastGeneratedBoard() {
+        int iterations = 20;
+        HashSet<GameBoard> gameBoards = new HashSet<>();
+        gameBoards.add(gameBoard);
+        GameBoard lastGeneratedBoard = new GameBoard(gameBoard);
+        for (int i = 0; i < iterations; i++) {
+            lastGeneratedBoard = gameBoardActions.randomGameBoardInitialization(lastGeneratedBoard);
+            gameBoards.add(lastGeneratedBoard);
+        }
+        assertEquals(iterations + 1, gameBoards.size(), 1);
+    }
+
+    @Test
+    void randomBoardSolvableRatio() {
+        int iterations = 10000;
+        int solvableCount = 0;
+        double expectedRatio = 0.5;
+        double delta = 0.05;
+        for (int i = 0; i < iterations; i++) {
+            GameBoard tmpGameBoard = gameBoardActions.randomGameBoardInitialization(gameBoard);
+            solvableCount += (gameBoardActions.isGameBoardSolvable(tmpGameBoard)) ? 1 : 0;
+        }
+
+        double actualSolvableRatio = ((double) solvableCount)/iterations;
+        assertTrue((actualSolvableRatio > expectedRatio - delta) && (actualSolvableRatio < expectedRatio + delta));
+    }
+
+    @Test
+    void unsolvable16BoardEvenBlankStepsOddInv() {
         int[][] boardMatrix = {{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}, {13, 15, 14, 16}};
         gameBoard.setBoard(boardMatrix);
 
@@ -53,7 +81,7 @@ class GameBoardActionsTest {
     }
 
     @Test
-    void solvableBoardEvenSizeOddBlankEvenInv() {
+    void solvable16BoardZeroBlankStepsEvenInv() {
         int[][] boardMatrix = {{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}, {15, 13, 14, 16}};
         gameBoard.setBoard(boardMatrix);
 
@@ -61,7 +89,7 @@ class GameBoardActionsTest {
     }
 
     @Test
-    void unsolvableBoardEvenSizeEvenBlankEvenInv() {
+    void unsolvable16BoardOddBlankStepsEvenInv() {
         int[][] boardMatrix = {{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 16}, {12, 13, 14, 15}};
         gameBoard.setBoard(boardMatrix);
         gameBoard.setBlankPosition(new int[]{2, 3});
@@ -70,8 +98,8 @@ class GameBoardActionsTest {
     }
 
     @Test
-    void solvableBoardEvenSizeEvenBlankOddInv() {
-        int[][] boardMatrix = {{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 16, 11}, {12, 13, 14, 15}};
+    void solvable16BoardEvenBlankStepsEvenInv() {
+        int[][] boardMatrix = {{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 16, 11}, {13, 12, 14, 15}};
         gameBoard.setBoard(boardMatrix);
         gameBoard.setBlankPosition(new int[]{2, 2});
 
@@ -79,8 +107,35 @@ class GameBoardActionsTest {
     }
 
     @Test
-    void unsolvableBoardOddSizeOddInv() {
-        int[][] boardMatrix = {{3, 1, 2}, {4, 5, 9}, {6, 7, 8}};
+    void solvable16BoardOddBlankStepsOddInv() {
+        int[][] boardMatrix = {{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 16, 10, 11}, {13, 12, 14, 15}};
+        gameBoard.setBoard(boardMatrix);
+        gameBoard.setBlankPosition(new int[]{2, 1});
+
+        assertTrue(gameBoardActions.isGameBoardSolvable(gameBoard));
+    }
+
+    @Test
+    void unsolvable9BoardEvenBlankStepsOddInv() {
+        int[][] boardMatrix = {{1, 3, 2}, {4, 9, 5}, {6, 7, 8}};
+        gameBoard.setBoard(boardMatrix);
+        gameBoard.setBlankPosition(new int[]{1, 1});
+
+        assertFalse(gameBoardActions.isGameBoardSolvable(gameBoard));
+    }
+
+    @Test
+    void solvable9BoardZeroBlankStepsEvenInv() {
+        int[][] boardMatrix = {{3, 1, 2}, {4, 5, 8}, {6, 7, 9}};
+        gameBoard.setBoard(boardMatrix);
+        gameBoard.setBlankPosition(new int[]{2, 2});
+
+        assertTrue(gameBoardActions.isGameBoardSolvable(gameBoard));
+    }
+
+    @Test
+    void unsolvable9BoardOddBlankStepsEvenInv() {
+        int[][] boardMatrix = {{1, 3, 2}, {4, 5, 9}, {6, 7, 8}};
         gameBoard.setBoard(boardMatrix);
         gameBoard.setBlankPosition(new int[]{1, 2});
 
@@ -88,8 +143,8 @@ class GameBoardActionsTest {
     }
 
     @Test
-    void solvableBoardOddSizeEvenInv() {
-        int[][] boardMatrix = {{1, 2, 3}, {4, 9, 5}, {6, 7, 8}};
+    void solvable9BoardEvenBlankStepsEvenInv() {
+        int[][] boardMatrix = {{3, 1, 2}, {4, 9, 5}, {6, 7, 8}};
         gameBoard.setBoard(boardMatrix);
         gameBoard.setBlankPosition(new int[]{1, 1});
 
@@ -97,7 +152,11 @@ class GameBoardActionsTest {
     }
 
     @Test
-    void solvableBoardCheck() {
+    void solvable9BoardOddBlankStepsOddInv() {
+        int[][] boardMatrix = {{3, 1, 2}, {9, 4, 5}, {6, 7, 8}};
+        gameBoard.setBoard(boardMatrix);
+        gameBoard.setBlankPosition(new int[]{1, 0});
+
         assertTrue(gameBoardActions.isGameBoardSolvable(gameBoard));
     }
 
