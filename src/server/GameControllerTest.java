@@ -18,7 +18,6 @@ class GameControllerTest {
 
     private static GameController gameController;
     private static GameBoard goalGameBoard;
-    private static GameBoardActions gameBoardActions;
     private ArrayList<Movement> possibleMoves;
 
     private GameBoard initialGameBoard;
@@ -29,14 +28,13 @@ class GameControllerTest {
     static void setGameController(){
         gameController = new GameController();
         goalGameBoard = new GameBoard(3);
-        gameBoardActions = new GameBoardActions();
     }
 
     @BeforeEach
     void setGameBoards(){
         gameController.initGame("3");
         initialGameBoard = gameController.getCurrentGameBoard();
-        possibleMoves = gameBoardActions.possibleMoves(initialGameBoard);
+        possibleMoves = GameBoardActions.possibleMoves(initialGameBoard);
     }
 
     @Test
@@ -125,7 +123,7 @@ class GameControllerTest {
         afterMoveGameBoard.setBoard(afterMoveBoard);
         afterMoveGameBoard.setBlankPosition(new int[]{2, 1});
 
-        StringBuilder boardRepresentation = Representation.boardWithAvailableMoves(afterMoveGameBoard, gameBoardActions.possibleMoves(afterMoveGameBoard));
+        StringBuilder boardRepresentation = Representation.boardWithAvailableMoves(afterMoveGameBoard, GameBoardActions.possibleMoves(afterMoveGameBoard));
         Response expected = new Response(boardRepresentation, statuses[0], PossibleResponses.getMoveMadeMessage());
         Response actual = gameController.playerMove("L");
 

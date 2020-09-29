@@ -2,7 +2,7 @@ package server.game_logic;
 
 import java.util.Arrays;
 
-//Optimal solution to check number of inversions using merge-sort nlogn instead of n^2
+// Inversion count for checking if board is solvable, can be done naively in n^2 or in nlogn
 class InversionCountMethod {
     private static int mergeAndCount(int[] flatBoard, int l, int m, int r)
     {
@@ -34,7 +34,7 @@ class InversionCountMethod {
         return swaps;
     }
 
-    // Merge sort function
+    //Optimal solution to check number of inversions using merge-sort nlogn instead of n^2
     protected static int mergeSortAndCount(int[] arr, int l, int r)
     {
         // Keeps track of the inversion count at a

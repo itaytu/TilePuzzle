@@ -69,8 +69,7 @@ public class GameBoard {
 
     @Override
     public int hashCode() {
-        //TODO: Check hashcoding for 2d array
-        return Arrays.hashCode(board);
+        return Arrays.deepHashCode(board);
     }
 
     @Override

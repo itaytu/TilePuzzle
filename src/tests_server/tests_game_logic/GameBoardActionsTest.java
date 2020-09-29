@@ -14,14 +14,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class GameBoardActionsTest {
 
-    private static GameBoardActions gameBoardActions;
     private GameBoard gameBoard;
     private GameBoard allMovesGameBoard;
-
-    @BeforeAll
-    static void setUp(){
-        gameBoardActions = new GameBoardActions();
-    }
 
     @BeforeEach
     void init(){
@@ -39,7 +33,7 @@ class GameBoardActionsTest {
         HashSet<GameBoard> gameBoards = new HashSet<>();
         gameBoards.add(gameBoard);
         for (int i = 0; i < iterations; i++) {
-            gameBoards.add(gameBoardActions.randomGameBoardInitialization(gameBoard));
+            gameBoards.add(GameBoardActions.randomGameBoardInitialization(gameBoard));
         }
         assertEquals(iterations + 1, gameBoards.size(), 1);
     }
@@ -51,7 +45,7 @@ class GameBoardActionsTest {
         gameBoards.add(gameBoard);
         GameBoard lastGeneratedBoard = new GameBoard(gameBoard);
         for (int i = 0; i < iterations; i++) {
-            lastGeneratedBoard = gameBoardActions.randomGameBoardInitialization(lastGeneratedBoard);
+            lastGeneratedBoard = GameBoardActions.randomGameBoardInitialization(lastGeneratedBoard);
             gameBoards.add(lastGeneratedBoard);
         }
         assertEquals(iterations + 1, gameBoards.size(), 1);
@@ -64,8 +58,8 @@ class GameBoardActionsTest {
         double expectedRatio = 0.5;
         double delta = 0.05;
         for (int i = 0; i < iterations; i++) {
-            GameBoard tmpGameBoard = gameBoardActions.randomGameBoardInitialization(gameBoard);
-            solvableCount += (gameBoardActions.isGameBoardSolvable(tmpGameBoard)) ? 1 : 0;
+            GameBoard tmpGameBoard = GameBoardActions.randomGameBoardInitialization(gameBoard);
+            solvableCount += (GameBoardActions.isGameBoardSolvable(tmpGameBoard)) ? 1 : 0;
         }
 
         double actualSolvableRatio = ((double) solvableCount)/iterations;
@@ -77,7 +71,7 @@ class GameBoardActionsTest {
         int[][] boardMatrix = {{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}, {13, 15, 14, 16}};
         gameBoard.setBoard(boardMatrix);
 
-        assertFalse(gameBoardActions.isGameBoardSolvable(gameBoard));
+        assertFalse(GameBoardActions.isGameBoardSolvable(gameBoard));
     }
 
     @Test
@@ -85,7 +79,7 @@ class GameBoardActionsTest {
         int[][] boardMatrix = {{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}, {15, 13, 14, 16}};
         gameBoard.setBoard(boardMatrix);
 
-        assertTrue(gameBoardActions.isGameBoardSolvable(gameBoard));
+        assertTrue(GameBoardActions.isGameBoardSolvable(gameBoard));
     }
 
     @Test
@@ -94,7 +88,7 @@ class GameBoardActionsTest {
         gameBoard.setBoard(boardMatrix);
         gameBoard.setBlankPosition(new int[]{2, 3});
 
-        assertFalse(gameBoardActions.isGameBoardSolvable(gameBoard));
+        assertFalse(GameBoardActions.isGameBoardSolvable(gameBoard));
     }
 
     @Test
@@ -103,7 +97,7 @@ class GameBoardActionsTest {
         gameBoard.setBoard(boardMatrix);
         gameBoard.setBlankPosition(new int[]{2, 2});
 
-        assertTrue(gameBoardActions.isGameBoardSolvable(gameBoard));
+        assertTrue(GameBoardActions.isGameBoardSolvable(gameBoard));
     }
 
     @Test
@@ -112,7 +106,7 @@ class GameBoardActionsTest {
         gameBoard.setBoard(boardMatrix);
         gameBoard.setBlankPosition(new int[]{2, 1});
 
-        assertTrue(gameBoardActions.isGameBoardSolvable(gameBoard));
+        assertTrue(GameBoardActions.isGameBoardSolvable(gameBoard));
     }
 
     @Test
@@ -121,7 +115,7 @@ class GameBoardActionsTest {
         gameBoard.setBoard(boardMatrix);
         gameBoard.setBlankPosition(new int[]{1, 1});
 
-        assertFalse(gameBoardActions.isGameBoardSolvable(gameBoard));
+        assertFalse(GameBoardActions.isGameBoardSolvable(gameBoard));
     }
 
     @Test
@@ -130,7 +124,7 @@ class GameBoardActionsTest {
         gameBoard.setBoard(boardMatrix);
         gameBoard.setBlankPosition(new int[]{2, 2});
 
-        assertTrue(gameBoardActions.isGameBoardSolvable(gameBoard));
+        assertTrue(GameBoardActions.isGameBoardSolvable(gameBoard));
     }
 
     @Test
@@ -139,7 +133,7 @@ class GameBoardActionsTest {
         gameBoard.setBoard(boardMatrix);
         gameBoard.setBlankPosition(new int[]{1, 2});
 
-        assertFalse(gameBoardActions.isGameBoardSolvable(gameBoard));
+        assertFalse(GameBoardActions.isGameBoardSolvable(gameBoard));
     }
 
     @Test
@@ -148,7 +142,7 @@ class GameBoardActionsTest {
         gameBoard.setBoard(boardMatrix);
         gameBoard.setBlankPosition(new int[]{1, 1});
 
-        assertTrue(gameBoardActions.isGameBoardSolvable(gameBoard));
+        assertTrue(GameBoardActions.isGameBoardSolvable(gameBoard));
     }
 
     @Test
@@ -157,7 +151,7 @@ class GameBoardActionsTest {
         gameBoard.setBoard(boardMatrix);
         gameBoard.setBlankPosition(new int[]{1, 0});
 
-        assertTrue(gameBoardActions.isGameBoardSolvable(gameBoard));
+        assertTrue(GameBoardActions.isGameBoardSolvable(gameBoard));
     }
 
     @Test
@@ -170,7 +164,7 @@ class GameBoardActionsTest {
         expectedMoves.add(Movement.UP);
         expectedMoves.add(Movement.LEFT);
 
-        assertEquals(expectedMoves, gameBoardActions.possibleMoves(gameBoard));
+        assertEquals(expectedMoves, GameBoardActions.possibleMoves(gameBoard));
     }
 
     @Test
@@ -183,7 +177,7 @@ class GameBoardActionsTest {
         expectedMoves.add(Movement.DOWN);
         expectedMoves.add(Movement.LEFT);
 
-        assertEquals(expectedMoves, gameBoardActions.possibleMoves(gameBoard));
+        assertEquals(expectedMoves, GameBoardActions.possibleMoves(gameBoard));
     }
 
     @Test
@@ -197,7 +191,7 @@ class GameBoardActionsTest {
         expectedMoves.add(Movement.DOWN);
         expectedMoves.add(Movement.LEFT);
 
-        assertEquals(expectedMoves, gameBoardActions.possibleMoves(gameBoard));
+        assertEquals(expectedMoves, GameBoardActions.possibleMoves(gameBoard));
     }
 
     @Test
@@ -210,7 +204,7 @@ class GameBoardActionsTest {
         expectedMoves.add(Movement.UP);
         expectedMoves.add(Movement.RIGHT);
 
-        assertEquals(expectedMoves, gameBoardActions.possibleMoves(gameBoard));
+        assertEquals(expectedMoves, GameBoardActions.possibleMoves(gameBoard));
     }
 
     @Test
@@ -223,7 +217,7 @@ class GameBoardActionsTest {
         expectedMoves.add(Movement.DOWN);
         expectedMoves.add(Movement.RIGHT);
 
-        assertEquals(expectedMoves, gameBoardActions.possibleMoves(gameBoard));
+        assertEquals(expectedMoves, GameBoardActions.possibleMoves(gameBoard));
     }
 
     @Test
@@ -237,7 +231,7 @@ class GameBoardActionsTest {
         expectedMoves.add(Movement.DOWN);
         expectedMoves.add(Movement.RIGHT);
 
-        assertEquals(expectedMoves, gameBoardActions.possibleMoves(gameBoard));
+        assertEquals(expectedMoves, GameBoardActions.possibleMoves(gameBoard));
     }
 
     @Test
@@ -251,7 +245,7 @@ class GameBoardActionsTest {
         expectedMoves.add(Movement.LEFT);
         expectedMoves.add(Movement.RIGHT);
 
-        assertEquals(expectedMoves, gameBoardActions.possibleMoves(gameBoard));
+        assertEquals(expectedMoves, GameBoardActions.possibleMoves(gameBoard));
     }
 
     @Test
@@ -265,7 +259,7 @@ class GameBoardActionsTest {
         expectedMoves.add(Movement.LEFT);
         expectedMoves.add(Movement.RIGHT);
 
-        assertEquals(expectedMoves, gameBoardActions.possibleMoves(gameBoard));
+        assertEquals(expectedMoves, GameBoardActions.possibleMoves(gameBoard));
     }
 
     @Test
@@ -276,7 +270,7 @@ class GameBoardActionsTest {
         expectedMoves.add(Movement.LEFT);
         expectedMoves.add(Movement.RIGHT);
 
-        assertEquals(expectedMoves, gameBoardActions.possibleMoves(allMovesGameBoard));
+        assertEquals(expectedMoves, GameBoardActions.possibleMoves(allMovesGameBoard));
     }
 
     @Test
@@ -284,7 +278,7 @@ class GameBoardActionsTest {
         int[][] expectedBoard = {{1, 5, 4}, {9, 3, 8}, {7, 2, 6}};
         GameBoard expectedGameBoard = new GameBoard();
         expectedGameBoard.setBoard(expectedBoard);
-        gameBoardActions.move(allMovesGameBoard, Movement.RIGHT);
+        GameBoardActions.move(allMovesGameBoard, Movement.RIGHT);
 
         assertEquals(expectedGameBoard, allMovesGameBoard);
     }
@@ -294,7 +288,7 @@ class GameBoardActionsTest {
         int[][] expectedBoard = {{1, 5, 4}, {3, 8, 9}, {7, 2, 6}};
         GameBoard expectedGameBoard = new GameBoard();
         expectedGameBoard.setBoard(expectedBoard);
-        gameBoardActions.move(allMovesGameBoard, Movement.LEFT);
+        GameBoardActions.move(allMovesGameBoard, Movement.LEFT);
 
         assertEquals(expectedGameBoard, allMovesGameBoard);
     }
@@ -304,7 +298,7 @@ class GameBoardActionsTest {
         int[][] expectedBoard = {{1, 9, 4}, {3, 5, 8}, {7, 2, 6}};
         GameBoard expectedGameBoard = new GameBoard();
         expectedGameBoard.setBoard(expectedBoard);
-        gameBoardActions.move(allMovesGameBoard, Movement.DOWN);
+        GameBoardActions.move(allMovesGameBoard, Movement.DOWN);
 
         assertEquals(expectedGameBoard, allMovesGameBoard);
     }
@@ -314,7 +308,7 @@ class GameBoardActionsTest {
         int[][] expectedBoard = {{1, 5, 4}, {3, 2, 8}, {7, 9, 6}};
         GameBoard expectedGameBoard = new GameBoard();
         expectedGameBoard.setBoard(expectedBoard);
-        gameBoardActions.move(allMovesGameBoard, Movement.UP);
+        GameBoardActions.move(allMovesGameBoard, Movement.UP);
 
         assertEquals(expectedGameBoard, allMovesGameBoard);
     }
