@@ -1,4 +1,4 @@
-package server;
+package server.controllers;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -104,6 +104,7 @@ class GameControllerTest {
         int[][] board = {{1, 2, 3}, {4, 5, 6}, {7, 9, 8}};
         initialGameBoard.setBoard(board);
         initialGameBoard.setBlankPosition(new int[]{2, 1});
+        gameController.setPossibleMoves(GameBoardActions.possibleMoves(initialGameBoard));
 
         Response expected = new Response(Representation.board(goalGameBoard), statuses[0], PossibleResponses.getGameFinishedMessage());
         Response actual = gameController.playerMove("L");
@@ -119,6 +120,7 @@ class GameControllerTest {
         int[][] afterMoveBoard = {{1, 2, 3}, {4, 5, 6}, {8, 9, 7}};
         initialGameBoard.setBoard(initialBoard);
         initialGameBoard.setBlankPosition(new int[]{2, 0});
+        gameController.setPossibleMoves(GameBoardActions.possibleMoves(initialGameBoard));
 
         GameBoard afterMoveGameBoard = new GameBoard();
         afterMoveGameBoard.setBoard(afterMoveBoard);

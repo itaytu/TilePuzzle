@@ -1,19 +1,16 @@
-package server;
+package server.controllers;
 
 import server.game_logic.GameBoardActions;
 import server.modules.GameBoard;
 import server.modules.Movement;
-import server.views.PossibleResponses;
 import server.modules.Response;
+import server.views.PossibleResponses;
 import server.views.Representation;
 
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 public class GameController {
-    static {
-        System.out.println(PossibleResponses.getInitiateGame());
-    }
 
     private GameBoard gameBoardSolution;
     private GameBoard currentGameBoard;
@@ -97,4 +94,8 @@ public class GameController {
     protected GameBoard getCurrentGameBoard() {
         return currentGameBoard;
     }
+
+    protected ArrayList<Movement> getPossibleMoves() { return possibleMoves; }
+
+    protected void setPossibleMoves(ArrayList<Movement> possibleMoves) { this.possibleMoves = possibleMoves; }
 }

@@ -2,10 +2,6 @@ package server.views;
 
 public class PossibleResponses {
 
-    public static String getInitiateGame() {
-        return "Hi, Welcome to the tile puzzle game.\n" + enterSizeMessage();
-    }
-
     public static String getInvalidMoveMessage(StringBuilder possibleMoves) {
         return "Invalid move, Please enter a valid move from:\n" + possibleMoves;
     }
