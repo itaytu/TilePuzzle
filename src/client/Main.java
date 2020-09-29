@@ -1,7 +1,8 @@
 package client;
 
-import server.GameController;
+import server.controllers.GameController;
 import server.modules.Response;
+import server.views.PossibleResponses;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,6 +14,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
         final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         GameController gameController = new GameController();
+        System.out.println("Hi, Welcome to the tile puzzle game.\n" + "Please enter a positive integer size for the board.");
         boolean isPlaying = true;
         String input;
         String pattern = "^([1-9][\\d]*)$";
