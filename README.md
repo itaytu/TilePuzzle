@@ -34,6 +34,7 @@
 <li>import project from remote version control.</li>
 <li>Choose a target directory on your machine for the project.</li>
 <li>A window will pop asking if you'd like to open the pom.xml file - click Yes.</li>
+<li>To run the program navigate to src -> main -> java -> client -> Main java class</li>
 </ul>
 </li>
 </ol>
