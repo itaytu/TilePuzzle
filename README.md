@@ -1,5 +1,5 @@
 <p><strong>Tile Puzzle</strong></p>
-<p>In this project, I've implemented a simple project to simulate a Tile Puzzle game.<br />I tried to use an event-based-architecture model and simulation for the program combined with the OOP paradigm.</p>
+<p>In this project, I've implemented a simple project to simulate a Tile Puzzle game.<br />I tried to use an event-based-architecture model and simulation for the program combined with the OOP paradigm. I've tried to build the solution using TDD approach.</p>
 <p><strong>Game steps:</strong></p>
 <ul>
 <li>First, the player chooses a valid integer to initialize the board size.</li>
@@ -19,11 +19,11 @@
 <p>First, you'll need Java installed on your machine. Follow&nbsp;this <a href="https://www.java.com/en/download/help/download_options.html">guide</a> to install java if you don't already have it.</p>
 <p>Choose from the following options.</p>
 <ol>
-<li>Download the project to your machine and Run jar file (Faster method)&nbsp;
+<li>Download the project to your machine and Run the .jar file (Faster method)&nbsp;
 <ul>
 <li>open the command prompt.</li>
 <li>navigate to the downloaded folder.</li>
-<li>run the following command to start the applications:&nbsp;</li>
+<li>run the following command to start the application:&nbsp;</li>
 <li>
 <blockquote>java -jar TilePuzzle.jar</blockquote>
 </li>
@@ -34,7 +34,7 @@
 <li>import project from remote version control.</li>
 <li>Choose a target directory on your machine for the project.</li>
 <li>A window will pop asking if you'd like to open the pom.xml file - click Yes.</li>
-<li>To run the program navigate to src -> main -> java -> client -> Main java class</li>
+<li>To run the program navigate to src -> main -> java -> client -> Main java class.</li>
 </ul>
 </li>
 </ol>
