@@ -29,7 +29,7 @@
 </li>
 </ul>
 </li>
-<li>Open an IDE of your choice (works best with Intellij).
+<li>Open an IDE of your choice (works best with IntelliJ).
 <ul>
 <li>import project from remote version control.</li>
 <li>Choose a target directory on your machine for the project.</li>
