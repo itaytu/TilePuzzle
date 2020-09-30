@@ -10,7 +10,7 @@ import server.views.PossibleResponses;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class MainTest {
 

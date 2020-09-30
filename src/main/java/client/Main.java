@@ -21,7 +21,7 @@ public class Main {
         Pattern r = Pattern.compile(pattern);
 
         do {                                                    // Client side verification
-            System.out.println("Please enter a positive integer size for the board.");
+            System.out.println("Please enter a positive integer for the board size.");
             input = reader.readLine();
         } while (!r.matcher(input).find());
 
@@ -32,18 +32,18 @@ public class Main {
             input = reader.readLine();
             response = gameController.initGame(input);
         }
+
         System.out.println(response.getResponseMessage() + '\n' + response.getGameBoard());
 
         while (isPlaying) {                                     // Game process
             input = reader.readLine();
             response = gameController.playerMove(input);
-            System.out.println(response.getResponseMessage());
             if (response.isGameOver())                          // Player ended game/game won
                 isPlaying = false;
-            else if (response.getStatus().equals("Success"))    // Valid movement -> fetch data
+            if (response.getStatus().equals("Success"))    // Valid movement -> fetch data
                     System.out.println(response.getGameBoard());
+            System.out.println(response.getResponseMessage());
         }
-
         reader.close();
     }
 }
