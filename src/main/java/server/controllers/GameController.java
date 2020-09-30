@@ -1,9 +1,9 @@
 package server.controllers;
 
 import server.game_logic.GameBoardActions;
-import server.modules.GameBoard;
-import server.modules.Movement;
-import server.modules.Response;
+import server.models.GameBoard;
+import server.models.Movement;
+import server.models.Response;
 import server.views.PossibleResponses;
 import server.views.Representation;
 
@@ -19,43 +19,39 @@ public class GameController {
     public Response initGame(String boardSize) {
         int boardSizeValidation = boardSizeValidation(boardSize);
         if (boardSizeValidation == -1)
-            return buildResponse(null, "Failed", PossibleResponses.getInvalidSizeMessage());
+            return buildResponse(null, "Failed", PossibleResponses.getInvalidSizeMessage(), false);
 
         gameBoardSolution = new GameBoard(boardSizeValidation);
         currentGameBoard = GameBoardActions.generateGameBoard(boardSizeValidation);
         possibleMoves = GameBoardActions.possibleMoves(currentGameBoard);
 
         StringBuilder gameBoardRepresentation = Representation.boardWithAvailableMoves(currentGameBoard, possibleMoves);
-        return buildResponse(gameBoardRepresentation, "Success", PossibleResponses.getGameCreatedMessage());
+        return buildResponse(gameBoardRepresentation, "Success", PossibleResponses.getGameCreatedMessage(), false);
     }
 
     public Response playerMove(String movement) {
         movement = movement.toUpperCase();
         // Check if player asked to quit
         if (isQuitGame(movement)){
-            Response response = buildResponse(null,  "Success", PossibleResponses.getGameQuitMessage());
-            response.setGameOver(true);
-            return response;
+            return buildResponse(null,  "Success", PossibleResponses.getGameQuitMessage(), true);
         }
         // Check if move is possible
         else if (!isMovementValid(movement)){
             StringBuilder possibleMovesRepresentation = Representation.availableMoves(possibleMoves);
-            return buildResponse(null, "Failed", PossibleResponses.getInvalidMoveMessage(possibleMovesRepresentation));
+            return buildResponse(null, "Failed", PossibleResponses.getInvalidMoveMessage(possibleMovesRepresentation), false);
         }
         // Make move
-        GameBoardActions.move(currentGameBoard, Movement.fromString(movement));
+        currentGameBoard = GameBoardActions.move(currentGameBoard, Movement.fromString(movement));
         possibleMoves = GameBoardActions.possibleMoves(currentGameBoard);
 
         // Check if after movement game is over
         if(isGameOver(currentGameBoard, gameBoardSolution)){
-            Response response = buildResponse(Representation.board(currentGameBoard), "Success", PossibleResponses.getGameFinishedMessage());
-            response.setGameOver(true);
-            return response;
+            return buildResponse(Representation.board(currentGameBoard), "Success", PossibleResponses.getGameFinishedMessage(), true);
         }
 
         // Return the response for the movement
         StringBuilder gameBoardRepresentation = Representation.boardWithAvailableMoves(currentGameBoard, possibleMoves);
-        return buildResponse(gameBoardRepresentation, "Success", PossibleResponses.getMoveMadeMessage());
+        return buildResponse(gameBoardRepresentation, "Success", PossibleResponses.getMoveMadeMessage(), false);
     }
 
     private int boardSizeValidation(String boardSize) {
@@ -87,15 +83,15 @@ public class GameController {
         return currentGameBoard.equals(solutionGameBoard);
     }
 
-    private Response buildResponse(StringBuilder gameBoard, String status, String responseMessage) {
-        return new Response(gameBoard, status, responseMessage);
+    private Response buildResponse(StringBuilder gameBoard, String status, String responseMessage, boolean isGameOver) {
+        return new Response(gameBoard, status, responseMessage, isGameOver);
     }
 
-    protected GameBoard getCurrentGameBoard() {
-        return currentGameBoard;
+    public GameBoard getCurrentGameBoard() {
+        return new GameBoard(currentGameBoard);
     }
 
-    protected ArrayList<Movement> getPossibleMoves() { return possibleMoves; }
-
-    protected void setPossibleMoves(ArrayList<Movement> possibleMoves) { this.possibleMoves = possibleMoves; }
+    public ArrayList<Movement> getPossibleMoves() {
+        return new ArrayList<>(possibleMoves);
+    }
 }

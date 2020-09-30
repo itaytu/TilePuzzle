@@ -1,9 +1,10 @@
-package server.game_logic;
+package server;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import server.modules.GameBoard;
-import server.modules.Movement;
+import server.game_logic.GameBoardActions;
+import server.models.GameBoard;
+import server.models.Movement;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -24,16 +25,26 @@ class GameBoardActionsTest {
         allMovesGameBoard.setBlankPosition(new int[]{1, 1});
     }
 
-
     @Test
-    void randomBoardsInitializationFromSameBoard() {
-        int iterations = 10;
+    void randomBoardsInitializationFromSameBoardLowAmount() {
+        int iterations = 100;
         HashSet<GameBoard> gameBoards = new HashSet<>();
         gameBoards.add(gameBoard);
         for (int i = 0; i < iterations; i++) {
             gameBoards.add(GameBoardActions.randomGameBoardInitialization(gameBoard));
         }
-        assertEquals(iterations + 1, gameBoards.size(), 1);
+        assertEquals(iterations + 1, gameBoards.size());
+    }
+
+    @Test
+    void randomBoardsInitializationFromSameBoardHighAmount() {
+        int iterations = 10000;
+        HashSet<GameBoard> gameBoards = new HashSet<>();
+        gameBoards.add(gameBoard);
+        for (int i = 1; i < iterations; i++) {
+            gameBoards.add(GameBoardActions.randomGameBoardInitialization(gameBoard));
+        }
+        assertEquals(iterations, gameBoards.size(), 50);
     }
 
     @Test

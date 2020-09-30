@@ -1,6 +1,7 @@
-package server.modules;
+package server;
 
 import org.junit.jupiter.api.Test;
+import server.models.GameBoard;
 
 import static org.junit.jupiter.api.Assertions.*;
 

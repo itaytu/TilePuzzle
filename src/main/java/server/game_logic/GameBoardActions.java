@@ -1,7 +1,7 @@
 package server.game_logic;
 
-import server.modules.GameBoard;
-import server.modules.Movement;
+import server.models.GameBoard;
+import server.models.Movement;
 
 import java.util.ArrayList;
 
@@ -28,8 +28,8 @@ public class GameBoardActions {
         return InGameAlgorithms.checkPossibleMoves(gameBoard);
     }
 
-    public static void move(GameBoard gameBoard, Movement movement) {
-        InGameAlgorithms.makeMovement(gameBoard, movement);
+    public static GameBoard move(GameBoard gameBoard, Movement movement) {
+        return InGameAlgorithms.makeMovement(gameBoard, movement);
     }
 
 }

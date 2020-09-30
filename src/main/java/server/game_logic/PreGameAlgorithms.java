@@ -1,6 +1,6 @@
 package server.game_logic;
 
-import server.modules.GameBoard;
+import server.models.GameBoard;
 
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -27,6 +27,7 @@ public class PreGameAlgorithms {
             --i;
         }
 
+        resultGameBoard.setBoard(board);
         resultGameBoard.setBlankPosition(findBlankPosition(board));
         return resultGameBoard;
     }

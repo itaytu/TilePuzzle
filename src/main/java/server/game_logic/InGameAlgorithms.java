@@ -1,7 +1,7 @@
 package server.game_logic;
 
-import server.modules.GameBoard;
-import server.modules.Movement;
+import server.models.GameBoard;
+import server.models.Movement;
 
 import java.util.ArrayList;
 

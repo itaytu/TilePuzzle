@@ -1,4 +1,4 @@
-package server.modules;
+package server.models;
 
 import java.util.Arrays;
 
@@ -17,34 +17,31 @@ public class GameBoard {
         initBoard();
     }
 
-   public GameBoard(GameBoard gameBoard){
+    public GameBoard(GameBoard gameBoard){
         this.board = new int[gameBoard.board.length][gameBoard.board.length];
-        for(int i = 0; i < gameBoard.board.length; i++)
-        {
-            int[] aMatrix = gameBoard.board[i];
-            int   aLength = aMatrix.length;
-            this.board[i] = new int[aLength];
-            System.arraycopy(aMatrix, 0, this.board[i], 0, aLength);
-        }
+        setBoard(gameBoard.board);
         this.blankPosition = new int[gameBoard.blankPosition.length];
         System.arraycopy(gameBoard.blankPosition, 0, this.blankPosition, 0, gameBoard.blankPosition.length);
     }
 
 
     public int[][] getBoard() {
-        return board;
+        return copyBoard(board);
     }
 
     public void setBoard(int[][] board) {
-        this.board = board;
+        this.board = copyBoard(board);
     }
 
     public int[] getBlankPosition() {
-        return blankPosition;
+        int[] copy = new int[this.blankPosition.length];
+        System.arraycopy(this.blankPosition, 0, copy, 0, copy.length);
+        return copy;
     }
 
     public void setBlankPosition(int[] blankPosition) {
-        this.blankPosition = blankPosition;
+        this.blankPosition = new int[blankPosition.length];
+        System.arraycopy(blankPosition, 0, this.blankPosition, 0, this.blankPosition.length);
     }
 
 
@@ -57,6 +54,20 @@ public class GameBoard {
         }
         blankPosition[0] = length - 1;
         blankPosition[1] = length - 1;
+    }
+
+    private int[][] copyBoard(int[][] original) {
+        if (original == null || original.length == 0)
+            return null;
+        int[][] copy = new int[original.length][original[0].length];
+        for(int i = 0; i < original.length; i++)
+        {
+            int[] aMatrix = original[i];
+            int   aLength = aMatrix.length;
+            copy[i] = new int[aLength];
+            System.arraycopy(aMatrix, 0, copy[i], 0, aLength);
+        }
+        return copy;
     }
 
     @Override

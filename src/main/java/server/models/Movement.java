@@ -1,4 +1,4 @@
-package server.modules;
+package server.models;
 
 public enum Movement {
     DOWN("D", new int[]{-1, 0}),
