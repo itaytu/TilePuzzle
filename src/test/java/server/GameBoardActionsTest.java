@@ -26,6 +26,17 @@ class GameBoardActionsTest {
     }
 
     @Test
+    void generateBoardQuality() {
+        int iterations = 100000;
+        HashSet<GameBoard> gameBoards = new HashSet<>();
+        gameBoards.add(gameBoard);
+        for (int i = 0; i < iterations; i++) {
+            gameBoards.add(GameBoardActions.generateGameBoard(4));
+        }
+        assertEquals(iterations + 1, gameBoards.size(), 5);
+    }
+
+    @Test
     void randomBoardsInitializationFromSameBoardLowAmount() {
         int iterations = 100;
         HashSet<GameBoard> gameBoards = new HashSet<>();
@@ -321,5 +332,28 @@ class GameBoardActionsTest {
 
         assertEquals(expectedGameBoard, allMovesGameBoard);
     }
+
+    @Test
+    void checkIfGameOverNotDone() {
+        int[][] firstBoard = {{1, 2, 3}, {4, 6, 8}, {5, 9, 7}};
+        GameBoard firstGameBoard = new GameBoard();
+        firstGameBoard.setBoard(firstBoard);
+
+        GameBoard secondGameBoard = new GameBoard(3);
+
+        assertFalse(GameBoardActions.isGameOver(firstGameBoard, secondGameBoard));
+    }
+
+    @Test
+    void checkIfGameOverDone() {
+        int[][] firstBoard = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
+        GameBoard firstGameBoard = new GameBoard();
+        firstGameBoard.setBoard(firstBoard);
+
+        GameBoard secondGameBoard = new GameBoard(3);
+
+        assertTrue(GameBoardActions.isGameOver(firstGameBoard, secondGameBoard));
+    }
+
 
 }

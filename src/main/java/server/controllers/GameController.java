@@ -45,7 +45,7 @@ public class GameController {
         possibleMoves = GameBoardActions.possibleMoves(currentGameBoard);
 
         // Check if after movement game is over
-        if(isGameOver(currentGameBoard, gameBoardSolution)){
+        if(GameBoardActions.isGameOver(currentGameBoard, gameBoardSolution)){
             return buildResponse(Representation.board(currentGameBoard), "Success", PossibleResponses.getGameFinishedMessage(), true);
         }
 
@@ -77,10 +77,6 @@ public class GameController {
         String pattern = "^(Q)$";
         Pattern r = Pattern.compile(pattern);
         return r.matcher(pressedKey).find();
-    }
-
-    private boolean isGameOver(GameBoard currentGameBoard, GameBoard solutionGameBoard) {
-        return currentGameBoard.equals(solutionGameBoard);
     }
 
     private Response buildResponse(StringBuilder gameBoard, String status, String responseMessage, boolean isGameOver) {

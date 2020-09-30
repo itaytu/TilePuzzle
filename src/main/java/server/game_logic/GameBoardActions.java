@@ -32,4 +32,7 @@ public class GameBoardActions {
         return InGameAlgorithms.makeMovement(gameBoard, movement);
     }
 
+    public static boolean isGameOver(GameBoard currentGameBoard, GameBoard solutionGameBoard) {
+        return currentGameBoard.equals(solutionGameBoard);
+    }
 }
