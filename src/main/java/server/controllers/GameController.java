@@ -19,26 +19,26 @@ public class GameController {
     public Response initGame(String boardSize) {
         int boardSizeValidation = boardSizeValidation(boardSize);
         if (boardSizeValidation == -1)
-            return buildResponse(null, "Failed", PossibleResponses.getInvalidSizeMessage(), false);
+            return buildResponse(null, Response.Status.ERROR, PossibleResponses.getInvalidSizeMessage(), false);
 
         gameBoardSolution = new GameBoard(boardSizeValidation);
         currentGameBoard = GameBoardActions.generateGameBoard(boardSizeValidation);
         possibleMoves = GameBoardActions.possibleMoves(currentGameBoard);
 
         StringBuilder gameBoardRepresentation = Representation.boardWithAvailableMoves(currentGameBoard, possibleMoves);
-        return buildResponse(gameBoardRepresentation, "Success", PossibleResponses.getGameCreatedMessage(), false);
+        return buildResponse(gameBoardRepresentation, Response.Status.OK, PossibleResponses.getGameCreatedMessage(), false);
     }
 
     public Response playerMove(String movement) {
         movement = movement.toUpperCase();
         // Check if player asked to quit
         if (isQuitGame(movement)){
-            return buildResponse(null,  "Success", PossibleResponses.getGameQuitMessage(), true);
+            return buildResponse(null,  Response.Status.OK, PossibleResponses.getGameQuitMessage(), true);
         }
         // Check if move is possible
         else if (!isMovementValid(movement)){
             StringBuilder possibleMovesRepresentation = Representation.availableMoves(possibleMoves);
-            return buildResponse(null, "Failed", PossibleResponses.getInvalidMoveMessage(possibleMovesRepresentation), false);
+            return buildResponse(null, Response.Status.ERROR, PossibleResponses.getInvalidMoveMessage(possibleMovesRepresentation), false);
         }
         // Make move
         currentGameBoard = GameBoardActions.move(currentGameBoard, Movement.fromString(movement));
@@ -46,12 +46,12 @@ public class GameController {
 
         // Check if after movement game is over
         if(GameBoardActions.isGameOver(currentGameBoard, gameBoardSolution)){
-            return buildResponse(Representation.board(currentGameBoard), "Success", PossibleResponses.getGameFinishedMessage(), true);
+            return buildResponse(Representation.board(currentGameBoard), Response.Status.OK, PossibleResponses.getGameFinishedMessage(), true);
         }
 
         // Return the response for the movement
         StringBuilder gameBoardRepresentation = Representation.boardWithAvailableMoves(currentGameBoard, possibleMoves);
-        return buildResponse(gameBoardRepresentation, "Success", PossibleResponses.getMoveMadeMessage(), false);
+        return buildResponse(gameBoardRepresentation, Response.Status.OK, PossibleResponses.getMoveMadeMessage(), false);
     }
 
     private int boardSizeValidation(String boardSize) {
@@ -79,7 +79,7 @@ public class GameController {
         return r.matcher(pressedKey).find();
     }
 
-    private Response buildResponse(StringBuilder gameBoard, String status, String responseMessage, boolean isGameOver) {
+    private Response buildResponse(StringBuilder gameBoard, Response.Status status, String responseMessage, boolean isGameOver) {
         return new Response(gameBoard, status, responseMessage, isGameOver);
     }
 

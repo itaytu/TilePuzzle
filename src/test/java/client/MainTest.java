@@ -35,7 +35,7 @@ class MainTest {
 
         String quitMove = "q";
         Response actualQuitResponse = gameController.playerMove(quitMove);
-        Response expectedQuitResponse = new Response(null, "Success", PossibleResponses.getGameQuitMessage(), true);
+        Response expectedQuitResponse = new Response(null, Response.Status.OK, PossibleResponses.getGameQuitMessage(), true);
 
         assertTrue((actualQuitResponse.equals(expectedQuitResponse))
                 && (expectedGameBoard.equals(gameController.getCurrentGameBoard())));

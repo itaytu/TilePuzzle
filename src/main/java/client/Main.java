@@ -27,7 +27,7 @@ public class Main {
 
         Response response = gameController.initGame(input);     // try to initiate game
 
-        while (response.getStatus().equals("Failed")) {         // Server side verification
+        while (response.getStatus().equals(Response.Status.ERROR)) {         // Server side verification
             System.out.println(response.getResponseMessage());
             input = reader.readLine();
             response = gameController.initGame(input);
@@ -40,7 +40,7 @@ public class Main {
             response = gameController.playerMove(input);
             if (response.isGameOver())                          // Player ended game/game won
                 isPlaying = false;
-            if (response.getStatus().equals("Success"))    // Valid movement -> fetch data
+            if (response.getStatus().equals(Response.Status.OK))    // Valid movement -> fetch data
                     System.out.println(response.getGameBoard());
             System.out.println(response.getResponseMessage());
         }
