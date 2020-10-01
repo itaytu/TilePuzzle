@@ -20,8 +20,6 @@ class GameControllerTest {
     private static GameController gameController;
     private ArrayList<Movement> possibleMoves;
 
-    private static final String[] statuses = {"Success", "Failed"};
-
     @BeforeAll
     static void setGameController(){
         gameController = new GameController();
@@ -35,7 +33,7 @@ class GameControllerTest {
 
     @Test
     void initGameInvalidSizeNegativeNumber() {
-        Response expected = new Response(null, statuses[1], PossibleResponses.getInvalidSizeMessage(), false);
+        Response expected = new Response(null, Response.Status.ERROR, PossibleResponses.getInvalidSizeMessage(), false);
         Response actual = gameController.initGame("-3");
 
         assertEquals(actual, expected);
@@ -43,7 +41,7 @@ class GameControllerTest {
 
     @Test
     void initGameInvalidSizeFloatingNumber() {
-        Response expected = new Response(null, statuses[1], PossibleResponses.getInvalidSizeMessage(), false);
+        Response expected = new Response(null, Response.Status.ERROR, PossibleResponses.getInvalidSizeMessage(), false);
         Response actual = gameController.initGame("3.2");
 
         assertEquals(actual, expected);
@@ -51,7 +49,7 @@ class GameControllerTest {
 
     @Test
     void initGameInvalidSizeNotANumber() {
-        Response expected = new Response(null, statuses[1], PossibleResponses.getInvalidSizeMessage(), false);
+        Response expected = new Response(null, Response.Status.ERROR, PossibleResponses.getInvalidSizeMessage(), false);
         Response actual = gameController.initGame("3a");
 
         assertEquals(actual, expected);
@@ -62,7 +60,7 @@ class GameControllerTest {
         Response actual = gameController.initGame("3");
         GameBoard current = gameController.getCurrentGameBoard();
         StringBuilder boardRepresentation = Representation.boardWithAvailableMoves(current, GameBoardActions.possibleMoves(current));
-        Response expected  = new Response(boardRepresentation, statuses[0], PossibleResponses.getGameCreatedMessage(), false);
+        Response expected  = new Response(boardRepresentation, Response.Status.OK, PossibleResponses.getGameCreatedMessage(), false);
 
         assertEquals(actual, expected);
     }
@@ -70,7 +68,7 @@ class GameControllerTest {
     @Test
     void playerMoveInvalidMove() {
         StringBuilder possibleMovesRepresentation = Representation.availableMoves(possibleMoves);
-        Response expected = new Response(null, statuses[1], PossibleResponses.getInvalidMoveMessage(possibleMovesRepresentation), false);
+        Response expected = new Response(null, Response.Status.ERROR, PossibleResponses.getInvalidMoveMessage(possibleMovesRepresentation), false);
         Response actual = gameController.playerMove("K");
 
         assertEquals(actual, expected);
@@ -78,7 +76,7 @@ class GameControllerTest {
 
     @Test
     void playerMoveQuitGame() {
-        Response expected = new Response(null, statuses[0], PossibleResponses.getGameQuitMessage(), true);
+        Response expected = new Response(null, Response.Status.OK, PossibleResponses.getGameQuitMessage(), true);
         expected.setGameOver(true);
         Response actual = gameController.playerMove("Q");
 
@@ -100,15 +98,15 @@ class GameControllerTest {
 
         Response actual;
         if(currentGameBoard.equals(gameBoardSolution))
-            actual = new Response(Representation.board(currentGameBoard), statuses[0], PossibleResponses.getGameFinishedMessage(), true);
+            actual = new Response(Representation.board(currentGameBoard), Response.Status.OK, PossibleResponses.getGameFinishedMessage(), true);
         else {
             StringBuilder gameBoardRepresentation = Representation.boardWithAvailableMoves(currentGameBoard, possibleMoves);
-            actual = new Response(gameBoardRepresentation, statuses[0], PossibleResponses.getMoveMadeMessage(), false);
+            actual = new Response(gameBoardRepresentation, Response.Status.OK, PossibleResponses.getMoveMadeMessage(), false);
 
         }
 
         StringBuilder boardRepresentation = Representation.board(gameBoardSolution);
-        Response expected = new Response(boardRepresentation, statuses[0], PossibleResponses.getGameFinishedMessage(), true);
+        Response expected = new Response(boardRepresentation, Response.Status.OK, PossibleResponses.getGameFinishedMessage(), true);
 
         assertEquals(actual, expected);
     }
@@ -130,14 +128,14 @@ class GameControllerTest {
 
         Response actual;
         if(currentGameBoard.equals(gameBoardSolution))
-            actual = new Response(Representation.board(currentGameBoard), "Success", PossibleResponses.getGameFinishedMessage(),true);
+            actual = new Response(Representation.board(currentGameBoard), Response.Status.OK, PossibleResponses.getGameFinishedMessage(),true);
         else {
             StringBuilder gameBoardRepresentation = Representation.boardWithAvailableMoves(currentGameBoard, possibleMoves);
-            actual = new Response(gameBoardRepresentation, "Success", PossibleResponses.getMoveMadeMessage(), false);
+            actual = new Response(gameBoardRepresentation, Response.Status.OK, PossibleResponses.getMoveMadeMessage(), false);
         }
 
         StringBuilder boardRepresentation = Representation.boardWithAvailableMoves(expectedGameBoard, GameBoardActions.possibleMoves(expectedGameBoard));
-        Response expected = new Response(boardRepresentation, statuses[0], PossibleResponses.getMoveMadeMessage(), false);
+        Response expected = new Response(boardRepresentation, Response.Status.OK, PossibleResponses.getMoveMadeMessage(), false);
 
         assertEquals(actual, expected);
     }

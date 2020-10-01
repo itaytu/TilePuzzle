@@ -3,13 +3,18 @@ package server.models;
 import java.util.Objects;
 
 public class Response {
-    private String status;
+
+    public enum Status{
+        OK, ERROR
+    }
+
     private String responseMessage;
     private StringBuilder gameBoardRepresentation;
+    private Status status;
 
     private boolean isGameOver;
 
-    public Response(StringBuilder gameBoard, String status, String responseMessage, boolean isGameOver){
+    public Response(StringBuilder gameBoard, Status status, String responseMessage, boolean isGameOver){
         if (gameBoard == null)
             this.gameBoardRepresentation = new StringBuilder();
         else
@@ -35,7 +40,7 @@ public class Response {
         return new StringBuilder(gameBoardRepresentation);
     }
 
-    public String getStatus() {
+    public Status getStatus() {
         return status;
     }
 
