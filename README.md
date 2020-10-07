@@ -1,5 +1,5 @@
 <p><strong>Tile Puzzle</strong></p>
-<p>In this project, I've implemented a simple project to simulate a Tile Puzzle game.<br />I tried to use an event-based-architecture model and simulation for the program combined with the OOP paradigm. I've tried to build the solution using TDD approach.</p>
+<p>In this project, I've implemented a simple project to simulate a Tile Puzzle game.<br />I tried to use the MVC desing pattern for the program with a TDD approach to build the solution.</p>
 <p><strong>Game steps:</strong></p>
 <ul>
 <li>First, the player chooses a valid integer to initialize the board size.</li>
